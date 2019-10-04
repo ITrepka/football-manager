@@ -19,5 +19,16 @@
         <maven.compiler.target>${javaVersion}</maven.compiler.target>
     </properties>
 
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.pretkejgames.old-school-manager</groupId>
+                <artifactId>manager-core</artifactId>
+                <version>1.0-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
+
+
 
 </project>

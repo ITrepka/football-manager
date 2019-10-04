@@ -1,4 +1,6 @@
-package com.pretkejgames.fmanager.core;
+package com.pretkejgames.fmanager.core.model;
+
+import com.pretkejgames.fmanager.core.model.Club;
 
 public class Match {
     private Club homeClub;

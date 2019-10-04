@@ -1,6 +1,5 @@
-package com.pretkejgames.fmanager.core;
+package com.pretkejgames.fmanager.core.model;
 
-import java.util.Collection;
 import java.util.Set;
 
 public class League {

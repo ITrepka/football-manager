@@ -1,4 +1,4 @@
-package com.pretkejgames.fmanager.core;
+package com.pretkejgames.fmanager.core.model;
 
 import java.util.Set;
 
@@ -12,6 +12,10 @@ public class Club {
 
     public Club(String name) {
         this.name = name;
+    }
+
+    public void setManager(Manager manager) {
+        this.manager = manager;
     }
 
     public void setPoints(int points) {

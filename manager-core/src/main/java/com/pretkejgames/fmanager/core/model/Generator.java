@@ -1,4 +1,9 @@
-package com.pretkejgames.fmanager.core;
+package com.pretkejgames.fmanager.core.model;
+
+import com.pretkejgames.fmanager.core.model.League;
+import com.pretkejgames.fmanager.core.model.Match;
+import com.pretkejgames.fmanager.core.model.MatchQueue;
+import com.pretkejgames.fmanager.core.model.Schedule;
 
 import java.util.Set;
 

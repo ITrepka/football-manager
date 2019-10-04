@@ -10,6 +10,12 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>manager-console</artifactId>
+    <dependencies>
+        <dependency>
+            <groupId>com.pretkejgames.old-school-manager</groupId>
+            <artifactId>manager-core</artifactId>
+        </dependency>
+    </dependencies>
 
 
 </project>

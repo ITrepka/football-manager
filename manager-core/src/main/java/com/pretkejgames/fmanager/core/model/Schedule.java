@@ -1,4 +1,6 @@
-package com.pretkejgames.fmanager.core;
+package com.pretkejgames.fmanager.core.model;
+
+import com.pretkejgames.fmanager.core.model.MatchQueue;
 
 import java.util.HashSet;
 import java.util.Set;
