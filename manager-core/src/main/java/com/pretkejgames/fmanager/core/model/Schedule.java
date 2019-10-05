@@ -1,14 +1,26 @@
 package com.pretkejgames.fmanager.core.model;
 
-import com.pretkejgames.fmanager.core.model.MatchQueue;
-
+import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Set;
+import java.util.List;
 
 public class Schedule {
-    Set<MatchQueue> matchQueues = new HashSet<>();
+    private List<MatchQueue> matchQueues = new ArrayList<>();
 
-    public Schedule(Set<MatchQueue> matchQueues) {
+    public Schedule(List<MatchQueue> matchQueues) {
         this.matchQueues = matchQueues;
+    }
+
+    public MatchQueue getQueue(int number) {
+        return matchQueues.get(number);
+    }
+
+    public MatchQueue getQueue() {
+        for (MatchQueue queue : matchQueues) {
+            if (!queue.wasPlayed()) {
+                return queue;
+            }
+        }
+        return null; //todo !!!
     }
 }

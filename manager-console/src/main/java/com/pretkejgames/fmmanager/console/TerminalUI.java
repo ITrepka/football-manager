@@ -30,6 +30,24 @@ public class TerminalUI {
         return null;
     }
 
+    public GameOptions readUserChoiceGameWindow() {
+        switch (scanner.nextInt()) {
+            case 1:
+                return GameOptions.PLAY_MATCH;
+            case 2:
+                return GameOptions.SAVE_GAME;
+            case 3:
+                return GameOptions.LOAD_GAME;
+            case 4:
+                return GameOptions.EXIT;
+            default:
+                System.out.println("Bad Choice! Type the number once again");
+                readUserChoiceGameWindow();
+        }
+        //todo
+        return null;
+    }
+
     public void displayNameQuery() {
         System.out.println("Write manager's name: ");
     }

@@ -1,15 +1,35 @@
 package com.pretkejgames.fmanager.core.model;
 
-import com.pretkejgames.fmanager.core.model.Club;
-
+import java.util.Map;
 import java.util.Set;
 
 public class Game {
-    String save;
+    Save save;
     Manager manager;
-    Rules rules;
+    League league;
 
-    public Game(Manager manager) {
+    public Game(Manager manager, Club club) {
         this.manager = manager;
+        manager.setClub(club);
+        this.league = League.loadLeague(Data.leagues)
+                .add(club);
+    }
+
+    public Save getSave() {
+        return save;
+    }
+
+    public void setSave(Save save) {
+        this.save = save;
+    }
+
+    public void newGameAutoSave() {
+        if (this.save == null) {
+            this.save = new Save("startGame");
+        }
+    }
+
+    public void playMatchday() {
+        league.getSchedule().getQueue().playQueque();
     }
 }

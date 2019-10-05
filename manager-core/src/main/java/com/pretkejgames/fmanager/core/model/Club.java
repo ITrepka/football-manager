@@ -1,5 +1,6 @@
 package com.pretkejgames.fmanager.core.model;
 
+import java.util.Objects;
 import java.util.Set;
 
 public class Club {
@@ -12,10 +13,6 @@ public class Club {
 
     public Club(String name) {
         this.name = name;
-    }
-
-    public void setManager(Manager manager) {
-        this.manager = manager;
     }
 
     public void setPoints(int points) {
@@ -36,5 +33,18 @@ public class Club {
 
     public void setGoalDifferential(int goalDifferential) {
         this.goalDifferential = goalDifferential;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Club club = (Club) o;
+        return name.equals(club.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name);
     }
 }

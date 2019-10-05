@@ -1,9 +1,8 @@
 package com.pretkejgames.fmmanager.console;
 
-import com.pretkejgames.fmanager.core.model.Club;
-import com.pretkejgames.fmanager.core.model.Game;
-import com.pretkejgames.fmanager.core.model.Male;
-import com.pretkejgames.fmanager.core.model.Manager;
+import com.pretkejgames.fmanager.core.model.*;
+
+import java.util.Date;
 
 public class Controller {
     TerminalUI terminalUI;
@@ -35,10 +34,41 @@ public class Controller {
     }
 
     private void handleStartNewGame() {
-        handleCreatingManager();
+        Manager manager = handleCreatingManager();
+        Club club = handleCreatingClub();
+        createGame(manager, club);
+        game.newGameAutoSave();
+        gameLoop();
     }
 
-    private void handleCreatingManager() {
+    private void gameLoop() {
+        int exitCode;
+        do {
+            terminalUI.displayGameWindow(game);
+            handleGameWindowChoice(terminalUI.readUserChoiceGameWindow());
+        }while (true);
+    }
+
+    private void handleGameWindowChoice(GameOptions readUserChoiceGameWindow) {
+        switch (readUserChoiceGameWindow) {
+            case PLAY_MATCH:
+                game.playMatchday();
+                break;
+            case SAVE_GAME:
+                String saveName = terminalUI.readSaveName();
+                game.setSave(new Save(saveName));
+                break;
+            case LOAD_GAME:
+                terminalUI.showSavesList(Data.saves);
+                String saveName = terminalUI.readSaveName();
+                loadGame(saveName);
+                break;
+            case EXIT:
+                System.exit(0);
+        }
+    }
+
+    private Manager handleCreatingManager() {
         terminalUI.displayCreatingManagerHeader();
         terminalUI.displayNameQuery();
         String managerName = terminalUI.readText();
@@ -47,8 +77,11 @@ public class Controller {
         terminalUI.displayMaleQuery();
         Male managerMale = terminalUI.readMale();
 
-        Manager manager = new Manager(managerName, managerSurname, managerMale)
-        game = new Game(manager);
+        return new Manager(managerName, managerSurname, managerMale);
+    }
+
+    private void createGame(Manager manager, Club club) {
+        game = new Game(manager, club);
     }
 
     private void exitGame() {
