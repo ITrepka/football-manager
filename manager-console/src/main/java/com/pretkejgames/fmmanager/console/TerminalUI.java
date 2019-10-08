@@ -1,5 +1,10 @@
 package com.pretkejgames.fmmanager.console;
 
+import com.pretkejgames.fmanager.core.model.Game;
+import com.pretkejgames.fmanager.core.model.Male;
+import com.pretkejgames.fmanager.core.model.Match;
+
+import java.util.Map;
 import java.util.Scanner;
 
 public class TerminalUI {
@@ -58,5 +63,36 @@ public class TerminalUI {
 
     public String readText() {
         return scanner.nextLine();
+    }
+
+    public void displayNameClubQuery() {
+        System.out.println("--- Club creating ---");
+        System.out.println("Write your club name: ");
+    }
+
+    public void displayGameWindow(Game game) {
+        System.out.println("1 - Play Matchday\n2 - Save Game\n3 - Load Game\n4 - Exit");
+    }
+
+    public void displayQueueResult(Map<Match, String> results) {
+        StringBuilder sb = new StringBuilder();
+
+        for (Map.Entry entry : results.entrySet()) {
+            sb.append("Match: " + entry.getKey() + " Result: " + entry.getValue());
+        }
+
+        System.out.println(sb.toString());
+    }
+
+    public void displaySurnameQuery() {
+        System.out.println("Surname: ");
+    }
+
+    public void displayMaleQuery() {
+        System.out.println("Male (M/F): ");
+    }
+
+    public Male readMale() {
+        return scanner.next().equals("M") ? Male.MALE : Male.FEMALE;
     }
 }

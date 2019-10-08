@@ -15,12 +15,8 @@ public class Game {
                 .add(club);
     }
 
-    public Save getSave() {
-        return save;
-    }
-
-    public void setSave(Save save) {
-        this.save = save;
+    public void playMatchday() {
+        league.getSchedule().getQueue().playQueque();
     }
 
     public void newGameAutoSave() {
@@ -29,7 +25,15 @@ public class Game {
         }
     }
 
-    public void playMatchday() {
-        league.getSchedule().getQueue().playQueque();
+    public Save getSave() {
+        return save;
+    }
+
+    public void setSave(Save save) {
+        this.save = save;
+    }
+
+    public League getLeague() {
+        return league;
     }
 }

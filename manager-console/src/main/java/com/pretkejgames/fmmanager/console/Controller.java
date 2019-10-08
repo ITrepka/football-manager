@@ -27,7 +27,8 @@ public class Controller {
                 handleStartNewGame();
                 break;
             case LOAD_GAME:
-                handleLoadGame();
+//                handleLoadGame();
+                break;
             case EXIT:
                 exitGame();
         }
@@ -39,6 +40,11 @@ public class Controller {
         createGame(manager, club);
         game.newGameAutoSave();
         gameLoop();
+    }
+
+    private Club handleCreatingClub() {
+        terminalUI.displayNameClubQuery();
+        return new Club(terminalUI.readText());
     }
 
     private void gameLoop() {
@@ -53,15 +59,16 @@ public class Controller {
         switch (readUserChoiceGameWindow) {
             case PLAY_MATCH:
                 game.playMatchday();
+                terminalUI.displayQueueResult(game.getLeague().getSchedule().getQueue().getResults());
                 break;
             case SAVE_GAME:
-                String saveName = terminalUI.readSaveName();
-                game.setSave(new Save(saveName));
+//                String saveName = terminalUI.readSaveName();
+//                game.setSave(new Save(saveName));
                 break;
             case LOAD_GAME:
-                terminalUI.showSavesList(Data.saves);
-                String saveName = terminalUI.readSaveName();
-                loadGame(saveName);
+//                terminalUI.showSavesList(Data.saves);
+//                String saveName = terminalUI.readSaveName();
+//                loadGame(saveName);
                 break;
             case EXIT:
                 System.exit(0);
