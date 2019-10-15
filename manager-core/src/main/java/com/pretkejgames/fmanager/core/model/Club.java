@@ -36,6 +36,11 @@ public class Club {
     }
 
     @Override
+    public String toString() {
+        return String.format("CLUB,%s,%d,%d,%d,%d,%d", name, points, goalScored, lostGoals, goalDifferential, championshipWon);
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
@@ -46,5 +51,9 @@ public class Club {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public byte[] clubsToCSV () {
+        //todo
     }
 }

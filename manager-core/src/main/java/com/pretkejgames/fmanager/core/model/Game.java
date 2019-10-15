@@ -1,9 +1,6 @@
 package com.pretkejgames.fmanager.core.model;
 
-import java.util.Map;
-import java.util.Set;
-
-public class Game {
+public class Game implements Saveable{
     Save save;
     Manager manager;
     League league;
@@ -11,8 +8,17 @@ public class Game {
     public Game(Manager manager, Club club) {
         this.manager = manager;
         manager.setClub(club);
-        this.league = League.loadLeague(Data.leagues)
-                .add(club);
+        newGameAutoSave();
+    }
+
+    public Game(Manager manager, League league, Save save) { //load database
+        this.manager = manager;
+        this.league = league;
+        this.save = save;
+    }
+
+    public byte[] toCSV() {
+        return String.format("GAME,%s,%s", manager, league).getBytes();
     }
 
     public void playMatchday() {

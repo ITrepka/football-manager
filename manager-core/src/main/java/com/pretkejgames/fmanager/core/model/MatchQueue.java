@@ -31,6 +31,11 @@ public class MatchQueue {
         return results;
     }
 
+    @Override
+    public String toString() {
+        return String.format("MATCHQUEUE,%s,%d,%b,results",matches,number,wasPlayed,results);
+    }
+
     public Set<Match> getMatches() {
         return matches;
     }

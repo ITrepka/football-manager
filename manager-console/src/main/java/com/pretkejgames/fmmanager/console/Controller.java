@@ -38,7 +38,6 @@ public class Controller {
         Manager manager = handleCreatingManager();
         Club club = handleCreatingClub();
         createGame(manager, club);
-        game.newGameAutoSave();
         gameLoop();
     }
 
@@ -79,6 +78,7 @@ public class Controller {
         terminalUI.displayCreatingManagerHeader();
         terminalUI.displayNameQuery();
         String managerName = terminalUI.readText();
+        terminalUI.readText();
         terminalUI.displaySurnameQuery();
         String managerSurname = terminalUI.readText();
         terminalUI.displayMaleQuery();

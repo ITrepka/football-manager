@@ -22,6 +22,11 @@ public class Match {
         return getResult();
     }
 
+    @Override
+    public String toString() {
+        return String.format("MATCH,%s,%s,%s,%b",homeClub,awayClub,result,wasPlayed);
+    }
+
     public String getResult() {
         return result;
     }

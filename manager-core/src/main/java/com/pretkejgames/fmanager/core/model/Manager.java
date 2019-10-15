@@ -13,6 +13,18 @@ public class Manager {
         this.male = male;
     }
 
+    public Manager(String csv) {
+        String[] data = csv.split(",");
+        this.name = data[0];
+        this.surname = data[1];
+        this.male = data[2].equalsIgnoreCase("male") ? Male.MALE : Male.FEMALE;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("MANAGER,%s,%s,%s,%s", name, surname, male == Male.MALE ? "MALE" : "FEMALE", club);
+    }
+
     public Club getClub() {
         return club;
     }

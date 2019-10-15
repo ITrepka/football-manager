@@ -23,4 +23,9 @@ public class Schedule {
         }
         return null; //todo !!!
     }
+
+    @Override
+    public String toString() {
+        return String.format("SCHEDULE,%s", matchQueues);
+    }
 }
