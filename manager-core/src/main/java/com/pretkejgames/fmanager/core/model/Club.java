@@ -52,8 +52,4 @@ public class Club {
     public int hashCode() {
         return Objects.hash(name);
     }
-
-    public byte[] clubsToCSV () {
-        //todo
-    }
 }

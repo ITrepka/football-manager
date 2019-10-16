@@ -8,7 +8,6 @@ public class Game implements Saveable{
     public Game(Manager manager, Club club) {
         this.manager = manager;
         manager.setClub(club);
-        newGameAutoSave();
     }
 
     public Game(Manager manager, League league, Save save) { //load database
@@ -23,12 +22,6 @@ public class Game implements Saveable{
 
     public void playMatchday() {
         league.getSchedule().getQueue().playQueque();
-    }
-
-    public void newGameAutoSave() {
-        if (this.save == null) {
-            this.save = new Save("startGame");
-        }
     }
 
     public Save getSave() {
