@@ -1,15 +1,22 @@
 package com.pretkejgames.fmanager.core.model;
 
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+import com.pretkejgames.fmanager.core.DAOS.GameDao;
 import com.pretkejgames.fmanager.core.model.League;
 import com.pretkejgames.fmanager.core.model.Match;
 import com.pretkejgames.fmanager.core.model.MatchQueue;
 import com.pretkejgames.fmanager.core.model.Schedule;
 
 import java.awt.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 public class Generator {
+
+
     //todo
     public static Schedule generateSchedule (List<Club> clubs) {
         Set<MatchQueue> queues = new HashSet<>();

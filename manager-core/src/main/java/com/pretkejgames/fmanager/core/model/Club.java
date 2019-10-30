@@ -15,6 +15,30 @@ public class Club {
         this.name = name;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public int getGoalScored() {
+        return goalScored;
+    }
+
+    public int getLostGoals() {
+        return lostGoals;
+    }
+
+    public int getGoalDifferential() {
+        return goalDifferential;
+    }
+
+    public int getChampionshipWon() {
+        return championshipWon;
+    }
+
     public void setPoints(int points) {
         this.points = points;
     }

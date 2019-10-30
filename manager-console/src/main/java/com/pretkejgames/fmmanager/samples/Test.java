@@ -15,7 +15,7 @@ import java.util.Scanner;
 
 public class Test {
     public static void main(String[] args) throws IOException {
-        List<String> lines = Files.readLines(new File("startGame.txt"), Charsets.UTF_8);
+        List<String> lines = Files.readLines(new File("C:\\Users\\User\\training-workspace\\old-school-manager\\saveGame.txt"), Charsets.UTF_8);
 
         for(String line:lines){
             System.out.println(line);

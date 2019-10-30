@@ -1,23 +1,23 @@
 package com.pretkejgames.fmanager.core.model;
 
-public class Game implements Saveable{
+import java.io.IOException;
+import java.util.List;
+
+public class Game {
     Save save;
     Manager manager;
     League league;
 
-    public Game(Manager manager, Club club) {
+    public Game(Manager manager, Club club, League league) throws IOException {
         this.manager = manager;
         manager.setClub(club);
+        this.league = league;
     }
 
     public Game(Manager manager, League league, Save save) { //load database
         this.manager = manager;
         this.league = league;
         this.save = save;
-    }
-
-    public byte[] toCSV() {
-        return String.format("GAME,%s,%s", manager, league).getBytes();
     }
 
     public void playMatchday() {

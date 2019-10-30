@@ -62,6 +62,7 @@ public class TerminalUI {
     }
 
     public String readText() {
+        scanner.reset();
         return scanner.nextLine();
     }
 
@@ -71,7 +72,7 @@ public class TerminalUI {
     }
 
     public void displayGameWindow(Game game) {
-        System.out.println("1 - Play Matchday\n2 - Save Game\n3 - Load Game\n4 - Exit");
+        System.out.println("1 - Play Matchday\n2 - Save Game\n3 - Load Game\n4 - Exit\n");
     }
 
     public void displayQueueResult(Map<Match, String> results) {

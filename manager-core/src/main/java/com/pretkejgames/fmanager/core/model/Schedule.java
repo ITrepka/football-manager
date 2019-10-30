@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.List;
 
 public class Schedule {
-    private List<MatchQueue> matchQueues = new ArrayList<>();
+    private List<MatchQueue> matchQueues;
 
     public Schedule(List<MatchQueue> matchQueues) {
         this.matchQueues = matchQueues;

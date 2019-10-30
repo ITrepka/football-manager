@@ -1,7 +1,9 @@
 package com.pretkejgames.fmmanager.console;
 
+import com.pretkejgames.fmanager.core.DAOS.LeagueDAO;
 import com.pretkejgames.fmanager.core.model.*;
 
+import java.io.IOException;
 import java.util.Date;
 
 public class Controller {
@@ -12,16 +14,16 @@ public class Controller {
         terminalUI = new TerminalUI();
     }
 
-    public void runGame() {
+    public void runGame() throws IOException {
         handleMenuOptions();
     }
 
-    private void handleMenuOptions() {
+    private void handleMenuOptions() throws IOException {
         terminalUI.displayStartMenu();
         handleMenuChoice(terminalUI.readUserChoice());
     }
 
-    private void handleMenuChoice(MenuOptions userMenuChoice) {
+    private void handleMenuChoice(MenuOptions userMenuChoice) throws IOException {
         switch (userMenuChoice) {
             case START_NEW_GAME:
                 handleStartNewGame();
@@ -34,16 +36,19 @@ public class Controller {
         }
     }
 
-    private void handleStartNewGame() {
+    private void handleStartNewGame() throws IOException {
         Manager manager = handleCreatingManager();
         Club club = handleCreatingClub();
-        createGame(manager, club);
+        LeagueDAO leagueDAO = new LeagueDAO();
+        League league = new League(leagueDAO.loadClubs());
+        createGame(manager, club, league);
         gameLoop();
     }
 
     private Club handleCreatingClub() {
         terminalUI.displayNameClubQuery();
-        return new Club(terminalUI.readText());
+        String clubName = terminalUI.readText();
+        return new Club("clubName");
     }
 
     private void gameLoop() {
@@ -87,8 +92,8 @@ public class Controller {
         return new Manager(managerName, managerSurname, managerMale);
     }
 
-    private void createGame(Manager manager, Club club) {
-        game = new Game(manager, club);
+    private void createGame(Manager manager, Club club, League league) throws IOException {
+        game = new Game(manager, club, league);
     }
 
     private void exitGame() {

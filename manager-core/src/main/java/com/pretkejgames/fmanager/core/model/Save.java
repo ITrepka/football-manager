@@ -2,11 +2,9 @@ package com.pretkejgames.fmanager.core.model;
 
 public class Save {
     private String name;
-    private static int saveID = 0;
 
-    public Save() {
-        name = "SAVE" + saveID++ + ".txt";
-        //todo
+    public Save () {
+        this.name = "autosave";
     }
 
     public Save(String name) {
@@ -16,9 +14,5 @@ public class Save {
 
     public String getName() {
         return name;
-    }
-
-    public static int getSaveID() {
-        return saveID;
     }
 }
