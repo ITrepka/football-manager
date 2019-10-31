@@ -8,9 +8,8 @@ import org.junit.Test;
 import java.io.IOException;
 
 public class GameDaoTest {
-//    @Test
-//    public void saveGameTest () throws IOException {
-//        Game game = new Game(new Manager("Irex", "Pretekst", Male.MALE), new Club("Ac Pretekst"));
-//        GameDao.saveGame("testPretkej",game);
-//    }
+    @Test
+    public void saveGameTest () throws IOException {
+//        Game game = new Game(new Manager("Irex", "Pretekst", Male.MALE), new Club("Ac Pretekst"), G);
+    }
 }

@@ -4,11 +4,13 @@ import com.pretkejgames.fmanager.core.DAOS.LeagueDAO;
 import com.pretkejgames.fmanager.core.model.*;
 
 import java.io.IOException;
-import java.util.Date;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 public class Controller {
-    TerminalUI terminalUI;
-    Game game;
+    private TerminalUI terminalUI;
+    private Game game;
 
     {
         terminalUI = new TerminalUI();
@@ -61,12 +63,9 @@ public class Controller {
 
     private void handleGameWindowChoice(GameOptions readUserChoiceGameWindow) {
         switch (readUserChoiceGameWindow) {
-            case PLAY_MATCH:
-                MatchQueue currentQueue = game.getLeague().getSchedule().getQueue();
-                PlayMatchdayService playMatchdayService = new PlayMatchdayService();
-                playMatchdayService.playMatchDay(currentQueue);
-                terminalUI.displayQueueResult(game.getLeague().getSchedule().getQueue().getMatches());
-                game.getLeague().getSchedule().getQueue().setNumber(currentQueue.getNumber() + 1);
+            case PLAY:
+                PlayOptions playWindowChoice = terminalUI.readPlayWindowChoice();
+                handlePlayWindowChoice(playWindowChoice);
                 break;
             case SAVE_GAME:
 //                String saveName = terminalUI.readSaveName();
@@ -80,6 +79,43 @@ public class Controller {
             case EXIT:
                 System.exit(0);
         }
+    }
+
+    private void handlePlayWindowChoice(PlayOptions playWindowChoice) {
+        switch(playWindowChoice){
+            case PLAY_MATCH:
+                handlePlayingMatchday();
+                break;
+            case DISPLAY_CURRENT_TABLE:
+                handleDisplayTable();
+                //todo
+                break;
+            case DISPLAY_SCHEDULE:
+                //todo
+                break;
+            case BACK:
+                //todo
+                break;
+        }
+    }
+
+    private void handleDisplayTable() {
+        List<Club> clubs = game.getLeague().getClubs();
+        Comparator<Club> comparatorGoalScored = (o1, o2) -> o2.getGoalScored() - o1.getGoalScored();
+        Collections.sort(clubs, comparatorGoalScored);
+        Comparator<Club> comparatorGoalDifferential = Comparator.comparingInt(Club::getGoalDifferential);
+        Collections.sort(clubs, comparatorGoalDifferential);
+        Comparator<Club> comparatorPoints = (o1, o2) -> o2.getPoints() - o1.getPoints();
+        Collections.sort(clubs, comparatorPoints);
+        terminalUI.displayCurrentTable(clubs);
+    }
+
+    private void handlePlayingMatchday() {
+        MatchQueue currentQueue = game.getLeague().getSchedule().getFirstNotPlayedQueque();
+        PlayMatchdayService playMatchdayService = new PlayMatchdayService();
+        playMatchdayService.playMatchDay(currentQueue);
+        terminalUI.displayQueueResult(game.getLeague().getSchedule().getFirstNotPlayedQueque().getMatches());
+        game.getLeague().getSchedule().getFirstNotPlayedQueque().setWasPlayed(true);
     }
 
     private Manager handleCreatingManager() {

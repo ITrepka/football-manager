@@ -43,7 +43,7 @@ public class MatchQueue {
                 "matches=" + matches +
                 ", number=" + number +
                 ", wasPlayed=" + wasPlayed +
-                '}';
+                '}'+"\n";
     }
 
     public void setWasPlayed(boolean wasPlayed) {

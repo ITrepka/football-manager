@@ -11,11 +11,11 @@ public class Schedule {
         this.matchQueues = matchQueues;
     }
 
-    public MatchQueue getQueue(int number) {
+    public MatchQueue getFirstNotPlayedQueque(int number) {
         return matchQueues.get(number);
     }
 
-    public MatchQueue getQueue() {
+    public MatchQueue getFirstNotPlayedQueque() {
         for (MatchQueue queue : matchQueues) {
             if (!queue.wasPlayed()) {
                 return queue;
@@ -26,6 +26,8 @@ public class Schedule {
 
     @Override
     public String toString() {
-        return String.format("SCHEDULE,%s", matchQueues);
+        return "Schedule{" +
+                "matchQueues=" + matchQueues +
+                '}' + "\n";
     }
 }

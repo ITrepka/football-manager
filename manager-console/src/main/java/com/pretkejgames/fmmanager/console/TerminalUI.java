@@ -1,10 +1,11 @@
 package com.pretkejgames.fmmanager.console;
 
+import com.pretkejgames.fmanager.core.model.Club;
 import com.pretkejgames.fmanager.core.model.Game;
 import com.pretkejgames.fmanager.core.model.Male;
 import com.pretkejgames.fmanager.core.model.Match;
 
-import java.util.Map;
+import java.util.List;
 import java.util.Scanner;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public class TerminalUI {
     public GameOptions readUserChoiceGameWindow() {
         switch (scanner.nextInt()) {
             case 1:
-                return GameOptions.PLAY_MATCH;
+                return GameOptions.PLAY;
             case 2:
                 return GameOptions.SAVE_GAME;
             case 3:
@@ -73,7 +74,7 @@ public class TerminalUI {
     }
 
     public void displayGameWindow(Game game) {
-        System.out.println("1 - Play Matchday\n2 - Save Game\n3 - Load Game\n4 - Exit\n");
+        System.out.println("1 - Play\n2 - Save Game\n3 - Load Game\n4 - Exit\n");
     }
 
     public void displayQueueResult(Set<Match> results) {
@@ -100,5 +101,36 @@ public class TerminalUI {
 
     public Male readMale() {
         return scanner.next().equals("M") ? Male.MALE : Male.FEMALE;
+    }
+
+    public PlayOptions readPlayWindowChoice() {
+        System.out.println("1 - Play Matchday\n2 - Display current table\n3 - Display Schedule\n4 - Back To Game Options\n");
+        switch (scanner.nextInt()) {
+            case 1:
+                return PlayOptions.PLAY_MATCH;
+            case 2:
+                return PlayOptions.DISPLAY_CURRENT_TABLE;
+            case 3:
+                return PlayOptions.DISPLAY_SCHEDULE;
+            case 4:
+                return PlayOptions.BACK;
+            default:
+                System.out.println("Bad Choice! Type the number once again");
+                readUserChoiceGameWindow();
+                throw new RuntimeException("Something wrong happened");
+        }
+    }
+
+    public void displayCurrentTable(List<Club> clubs) {
+        System.out.println("Place\tName\tGoals Scored\tLost Goals\tGoalDifferential\tPoints");
+        for (int i = 0; i < clubs.size(); i++) {
+            System.out.printf("%d\t%s\t%d\t%d\t%d\t%d pkt\n",
+                    i + 1,
+                    clubs.get(i).getName(),
+                    clubs.get(i).getGoalScored(),
+                    clubs.get(i).getLostGoals(),
+                    clubs.get(i).getGoalDifferential(),
+                    clubs.get(i).getPoints());
+        }
     }
 }
