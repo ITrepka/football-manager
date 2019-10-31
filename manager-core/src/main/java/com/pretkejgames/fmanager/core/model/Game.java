@@ -20,10 +20,6 @@ public class Game {
         this.save = save;
     }
 
-    public void playMatchday() {
-        league.getSchedule().getQueue().playQueque();
-    }
-
     public Save getSave() {
         return save;
     }

@@ -11,29 +11,18 @@ public class MatchQueue {
     private Set<Match> matches;
     private int number;
     private boolean wasPlayed;
-    Map<Match, String> results;
 
     public MatchQueue(Set<Match> matches, int number) {
         this.matches = matches;
         this.number = number;
     }
 
-    public void playQueque() {
-        Map<Match, String> queueResults = new HashMap<>();
-        for (Match match : matches) {
-            queueResults.put(match, match.playMatch());
-        }
-        wasPlayed = true;
-        results = queueResults;
+    public void setNumber(int number) {
+        this.number = number;
     }
 
-    public Map<Match, String> getResults() {
-        return results;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("MATCHQUEUE,%s,%d,%b,results",matches,number,wasPlayed,results);
+    public int getNumber() {
+        return number;
     }
 
     public Set<Match> getMatches() {
@@ -46,6 +35,15 @@ public class MatchQueue {
 
     public boolean wasPlayed() {
         return wasPlayed;
+    }
+
+    @Override
+    public String toString() {
+        return "MatchQueue{" +
+                "matches=" + matches +
+                ", number=" + number +
+                ", wasPlayed=" + wasPlayed +
+                '}';
     }
 
     public void setWasPlayed(boolean wasPlayed) {

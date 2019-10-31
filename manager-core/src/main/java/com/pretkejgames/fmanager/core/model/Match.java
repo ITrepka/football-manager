@@ -5,7 +5,7 @@ import java.util.Random;
 public class Match {
     private Club homeClub;
     private Club awayClub;
-    private String result;
+    private MatchResult result;
     private boolean wasPlayed;
 
     public Match(Club homeClub, Club awayClub) {
@@ -13,13 +13,32 @@ public class Match {
         this.awayClub = awayClub;
     }
 
-    public String playMatch() {
-        Random random = new Random();
-        int goalHome = random.nextInt(6) + 1;
-        int goalAway = random.nextInt(6) + 1;
-        result = goalHome+ ":" + goalAway;
-        wasPlayed = true;
-        return getResult();
+    public Club getHomeClub() {
+        return homeClub;
+    }
+
+    public void setHomeClub(Club homeClub) {
+        this.homeClub = homeClub;
+    }
+
+    public Club getAwayClub() {
+        return awayClub;
+    }
+
+    public void setAwayClub(Club awayClub) {
+        this.awayClub = awayClub;
+    }
+
+    public void setResult(MatchResult result) {
+        this.result = result;
+    }
+
+    public boolean isWasPlayed() {
+        return wasPlayed;
+    }
+
+    public void setWasPlayed(boolean wasPlayed) {
+        this.wasPlayed = wasPlayed;
     }
 
     @Override
@@ -27,7 +46,7 @@ public class Match {
         return String.format("MATCH,%s,%s,%s,%b",homeClub,awayClub,result,wasPlayed);
     }
 
-    public String getResult() {
+    public MatchResult getResult() {
         return result;
     }
 

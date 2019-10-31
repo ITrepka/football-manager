@@ -62,8 +62,11 @@ public class Controller {
     private void handleGameWindowChoice(GameOptions readUserChoiceGameWindow) {
         switch (readUserChoiceGameWindow) {
             case PLAY_MATCH:
-                game.playMatchday();
-                terminalUI.displayQueueResult(game.getLeague().getSchedule().getQueue().getResults());
+                MatchQueue currentQueue = game.getLeague().getSchedule().getQueue();
+                PlayMatchdayService playMatchdayService = new PlayMatchdayService();
+                playMatchdayService.playMatchDay(currentQueue);
+                terminalUI.displayQueueResult(game.getLeague().getSchedule().getQueue().getMatches());
+                game.getLeague().getSchedule().getQueue().setNumber(currentQueue.getNumber() + 1);
                 break;
             case SAVE_GAME:
 //                String saveName = terminalUI.readSaveName();

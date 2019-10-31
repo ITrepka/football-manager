@@ -6,6 +6,7 @@ import com.pretkejgames.fmanager.core.model.Match;
 
 import java.util.Map;
 import java.util.Scanner;
+import java.util.Set;
 
 public class TerminalUI {
     Scanner scanner;
@@ -15,8 +16,8 @@ public class TerminalUI {
     }
 
     public void displayStartMenu() {
-        System.out.printf("Welcome to Football Club Manager!\n");
-        System.out.printf("1 - Start New Game\n2 - Load Game\n3 - Exit");
+        System.out.println("Welcome to Football Club Manager!");
+        System.out.printf("1 - Start New Game\n2 - Load Game\n3 - Exit\n");
     }
 
     public MenuOptions readUserChoice() {
@@ -75,11 +76,15 @@ public class TerminalUI {
         System.out.println("1 - Play Matchday\n2 - Save Game\n3 - Load Game\n4 - Exit\n");
     }
 
-    public void displayQueueResult(Map<Match, String> results) {
+    public void displayQueueResult(Set<Match> results) {
         StringBuilder sb = new StringBuilder();
 
-        for (Map.Entry entry : results.entrySet()) {
-            sb.append("Match: " + entry.getKey() + " Result: " + entry.getValue());
+        for (Match match : results) {
+            sb.append(String.format("%s %d - %d %s\n",
+                    match.getHomeClub().getName(),
+                    match.getResult().getHomeTeamGoals(),
+                    match.getResult().getAwayTeamGoals(),
+                    match.getAwayClub().getName()));
         }
 
         System.out.println(sb.toString());
