@@ -1,9 +1,6 @@
 package com.pretkejgames.fmanager.core.model;
 
-import java.io.File;
-import java.util.Collections;
 import java.util.List;
-import java.util.Set;
 
 public class League {
     private List<Club> clubs;
@@ -11,7 +8,7 @@ public class League {
 
     public League(List<Club> clubs) {
         this.clubs = clubs;
-        this.schedule = Generator.generateSchedule(clubs);
+        this.schedule = GeneratorService.generateSchedule(clubs);
     }
 
     public static League loadLeague(List<Club> clubs) {

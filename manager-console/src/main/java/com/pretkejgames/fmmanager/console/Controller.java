@@ -3,6 +3,7 @@ package com.pretkejgames.fmmanager.console;
 import com.pretkejgames.fmanager.core.DAOS.LeagueDAO;
 import com.pretkejgames.fmanager.core.model.*;
 
+import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -91,12 +92,17 @@ public class Controller {
                 //todo
                 break;
             case DISPLAY_SCHEDULE:
+                handleDisplaySchedule();
                 //todo
                 break;
             case BACK:
                 //todo
                 break;
         }
+    }
+
+    private void handleDisplaySchedule() {
+        terminalUI.displaySchedule(game.getLeague().getSchedule());
     }
 
     private void handleDisplayTable() {
@@ -114,8 +120,28 @@ public class Controller {
         MatchQueue currentQueue = game.getLeague().getSchedule().getFirstNotPlayedQueque();
         PlayMatchdayService playMatchdayService = new PlayMatchdayService();
         playMatchdayService.playMatchDay(currentQueue);
-        terminalUI.displayQueueResult(game.getLeague().getSchedule().getFirstNotPlayedQueque().getMatches());
+        handleMatchdayResults(currentQueue);
+        terminalUI.displayQueueResult(currentQueue.getMatches());
         game.getLeague().getSchedule().getFirstNotPlayedQueque().setWasPlayed(true);
+    }
+
+    private void handleMatchdayResults(MatchQueue currentQueue) {
+        for (Match match : currentQueue.getMatches()) {
+            Club homeClub = match.getHomeClub();
+            Club awayClub = match.getAwayClub();
+            int homeClubGoals = match.getResult().getHomeTeamGoals();
+            int awayClubGoals = match.getResult().getAwayTeamGoals();
+            homeClub.addScoredGoals(homeClubGoals);
+            homeClub.addLostGoals(awayClubGoals);
+            homeClub.calculateGoalDifferential();
+            awayClub.addScoredGoals(awayClubGoals);
+            awayClub.addLostGoals(homeClubGoals);
+            awayClub.calculateGoalDifferential();
+
+
+            homeClub.addPoints(match.getResult().getResultHome().points);
+            awayClub.addPoints(match.getResult().getResultAway().points);
+        }
     }
 
     private Manager handleCreatingManager() {

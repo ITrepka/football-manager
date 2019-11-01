@@ -24,6 +24,10 @@ public class Schedule {
         return null; //todo !!!
     }
 
+    public List<MatchQueue> getMatchQueues() {
+        return matchQueues;
+    }
+
     @Override
     public String toString() {
         return "Schedule{" +

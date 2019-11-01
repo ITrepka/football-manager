@@ -55,8 +55,8 @@ public class Club {
         this.lostGoals = lostGoals;
     }
 
-    public void setGoalDifferential(int goalDifferential) {
-        this.goalDifferential = goalDifferential;
+    public void calculateGoalDifferential() {
+        goalDifferential = goalScored - lostGoals;
     }
 
     @Override
@@ -75,5 +75,17 @@ public class Club {
     @Override
     public int hashCode() {
         return Objects.hash(name);
+    }
+
+    public void addScoredGoals(int goalScored) {
+        this.goalScored += goalScored;
+    }
+
+    public void addLostGoals(int lostGoals) {
+        this.lostGoals += lostGoals;
+    }
+
+    public void addPoints(int points) {
+        this.points += points;
     }
 }

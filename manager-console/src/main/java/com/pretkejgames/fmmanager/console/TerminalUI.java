@@ -1,9 +1,6 @@
 package com.pretkejgames.fmmanager.console;
 
-import com.pretkejgames.fmanager.core.model.Club;
-import com.pretkejgames.fmanager.core.model.Game;
-import com.pretkejgames.fmanager.core.model.Male;
-import com.pretkejgames.fmanager.core.model.Match;
+import com.pretkejgames.fmanager.core.model.*;
 
 import java.util.List;
 import java.util.Scanner;
@@ -122,7 +119,7 @@ public class TerminalUI {
     }
 
     public void displayCurrentTable(List<Club> clubs) {
-        System.out.println("Place\tName\tGoals Scored\tLost Goals\tGoalDifferential\tPoints");
+        System.out.println("Order|Name|Goals Scored|Lost Goals|GoalDifferential|Points");
         for (int i = 0; i < clubs.size(); i++) {
             System.out.printf("%d\t%s\t%d\t%d\t%d\t%d pkt\n",
                     i + 1,
@@ -131,6 +128,23 @@ public class TerminalUI {
                     clubs.get(i).getLostGoals(),
                     clubs.get(i).getGoalDifferential(),
                     clubs.get(i).getPoints());
+        }
+    }
+
+    public void displayMatchResult(Match match) {
+        System.out.printf("%s %d - %d %s\n",
+                match.getHomeClub().getName(),
+                match.getHomeClub().getGoalScored(),
+                match.getAwayClub().getGoalScored(),
+                match.getAwayClub().getName());
+    }
+    //fori
+    public void displaySchedule(Schedule schedule) {
+        for (MatchQueue matchQueue : schedule.getMatchQueues()) {
+            System.out.println(matchQueue.getNumber() + " kolejka!");
+            for (Match match : matchQueue.getMatches()) {
+                displayMatchResult(match);
+            }
         }
     }
 }
