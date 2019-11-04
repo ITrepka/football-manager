@@ -8,7 +8,7 @@ public class League {
 
     public League(List<Club> clubs) {
         this.clubs = clubs;
-        this.schedule = GeneratorService.generateSchedule(clubs);
+        this.schedule = ScheduleService.generateSchedule(clubs);
     }
 
     public static League loadLeague(List<Club> clubs) {

@@ -3,7 +3,6 @@ package com.pretkejgames.fmmanager.console;
 import com.pretkejgames.fmanager.core.DAOS.LeagueDAO;
 import com.pretkejgames.fmanager.core.model.*;
 
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.Comparator;
@@ -43,7 +42,9 @@ public class Controller {
         Manager manager = handleCreatingManager();
         Club club = handleCreatingClub();
         LeagueDAO leagueDAO = new LeagueDAO();
-        League league = new League(leagueDAO.loadClubs());
+        List<Club> clubs = leagueDAO.loadClubs();
+        clubs.add(club);
+        League league = new League(clubs);
         createGame(manager, club, league);
         gameLoop();
     }
@@ -51,7 +52,7 @@ public class Controller {
     private Club handleCreatingClub() {
         terminalUI.displayNameClubQuery();
         String clubName = terminalUI.readText();
-        return new Club("clubName");
+        return new Club(clubName);
     }
 
     private void gameLoop() {
@@ -148,7 +149,6 @@ public class Controller {
         terminalUI.displayCreatingManagerHeader();
         terminalUI.displayNameQuery();
         String managerName = terminalUI.readText();
-        terminalUI.readText();
         terminalUI.displaySurnameQuery();
         String managerSurname = terminalUI.readText();
         terminalUI.displayMaleQuery();

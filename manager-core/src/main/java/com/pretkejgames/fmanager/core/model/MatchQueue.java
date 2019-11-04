@@ -2,10 +2,7 @@ package com.pretkejgames.fmanager.core.model;
 
 import com.pretkejgames.fmanager.core.model.Match;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 public class MatchQueue {
     private Set<Match> matches;
@@ -38,12 +35,30 @@ public class MatchQueue {
     }
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        MatchQueue that = (MatchQueue) o;
+        for (Match match : that.matches) {
+            if (matches.contains(match)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(matches);
+    }
+
+    @Override
     public String toString() {
         return "MatchQueue{" +
                 "matches=" + matches +
                 ", number=" + number +
                 ", wasPlayed=" + wasPlayed +
-                '}'+"\n";
+                '}' + "\n";
     }
 
     public void setWasPlayed(boolean wasPlayed) {

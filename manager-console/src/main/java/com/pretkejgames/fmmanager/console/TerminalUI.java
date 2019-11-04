@@ -19,7 +19,9 @@ public class TerminalUI {
     }
 
     public MenuOptions readUserChoice() {
-        switch (scanner.nextInt()) {
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        switch (choice) {
             case 1:
                 return MenuOptions.START_NEW_GAME;
             case 2:
@@ -35,7 +37,9 @@ public class TerminalUI {
     }
 
     public GameOptions readUserChoiceGameWindow() {
-        switch (scanner.nextInt()) {
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        switch (choice) {
             case 1:
                 return GameOptions.PLAY;
             case 2:
@@ -61,7 +65,6 @@ public class TerminalUI {
     }
 
     public String readText() {
-        scanner.reset();
         return scanner.nextLine();
     }
 
@@ -97,12 +100,14 @@ public class TerminalUI {
     }
 
     public Male readMale() {
-        return scanner.next().equals("M") ? Male.MALE : Male.FEMALE;
+        return scanner.nextLine().equals("M") ? Male.MALE : Male.FEMALE;
     }
 
     public PlayOptions readPlayWindowChoice() {
         System.out.println("1 - Play Matchday\n2 - Display current table\n3 - Display Schedule\n4 - Back To Game Options\n");
-        switch (scanner.nextInt()) {
+        int choice = scanner.nextInt();
+        scanner.nextLine();
+        switch (choice) {
             case 1:
                 return PlayOptions.PLAY_MATCH;
             case 2:
@@ -132,12 +137,19 @@ public class TerminalUI {
     }
 
     public void displayMatchResult(Match match) {
-        System.out.printf("%s %d - %d %s\n",
-                match.getHomeClub().getName(),
-                match.getHomeClub().getGoalScored(),
-                match.getAwayClub().getGoalScored(),
-                match.getAwayClub().getName());
+        String homeClubName = match.getHomeClub().getName();
+        String awayClubName = match.getAwayClub().getName();
+        int homeClubGoals = match.getHomeClub().getGoalScored();
+        int awayClubGoals = match.getAwayClub().getGoalScored();
+        StringBuilder builder = new StringBuilder();
+        builder.append(homeClubName + " ")
+                .append(match.isWasPlayed() ? homeClubGoals : "")
+                .append(" - ")
+                .append(match.isWasPlayed() ? awayClubGoals : "")
+                .append(" " + awayClubName);
+        System.out.println(builder.toString());
     }
+
     //fori
     public void displaySchedule(Schedule schedule) {
         for (MatchQueue matchQueue : schedule.getMatchQueues()) {

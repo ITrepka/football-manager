@@ -23,7 +23,7 @@ public class Club {
         return points;
     }
 
-    public int getGoalScored() {
+    public Integer getGoalScored() {
         return goalScored;
     }
 
@@ -61,7 +61,7 @@ public class Club {
 
     @Override
     public String toString() {
-        return String.format("CLUB,%s,%d,%d,%d,%d,%d", name, points, goalScored, lostGoals, goalDifferential, championshipWon);
+        return name;
     }
 
     @Override

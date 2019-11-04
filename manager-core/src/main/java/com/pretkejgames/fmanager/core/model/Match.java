@@ -43,7 +43,7 @@ public class Match {
 
     @Override
     public String toString() {
-        return String.format("MATCH,%s,%s,%s,%b",homeClub,awayClub,result,wasPlayed);
+        return String.format("MATCH:%s,%s",homeClub,awayClub);
     }
 
     public MatchResult getResult() {
@@ -58,7 +58,8 @@ public class Match {
             return false;
         }
         Match comparedMatch = (Match) o;
-        return homeClub.equals(comparedMatch.homeClub) && awayClub.equals(comparedMatch.awayClub);
+        return homeClub.equals(comparedMatch.homeClub) && awayClub.equals(comparedMatch.awayClub) ||
+                awayClub.equals(comparedMatch.homeClub) && homeClub.equals(comparedMatch.awayClub) ;
     }
 
     @Override
