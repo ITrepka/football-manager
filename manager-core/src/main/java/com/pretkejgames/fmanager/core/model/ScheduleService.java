@@ -1,61 +1,104 @@
 package com.pretkejgames.fmanager.core.model;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import com.pretkejgames.fmanager.core.DAOS.GameDao;
-import com.pretkejgames.fmanager.core.model.League;
-import com.pretkejgames.fmanager.core.model.Match;
-import com.pretkejgames.fmanager.core.model.MatchQueue;
-import com.pretkejgames.fmanager.core.model.Schedule;
-
-import java.awt.*;
-import java.io.File;
-import java.io.IOException;
 import java.util.*;
 import java.util.List;
 
 public class ScheduleService {
+    private static int TEAMS_QUANTITY;
+
     //todo
-    public static Schedule generateSchedule (List<Club> clubs) {
-        List<MatchQueue> queues = new ArrayList<>();
-        do {
-            System.out.println(queues.size());
-            List<Club> clubsCopy = new ArrayList<>(clubs);
-            MatchQueue generatedMatchQueue = generateSetMatchesQueue(clubsCopy, queues.size() + 1);
-            if (!queues.contains(generatedMatchQueue)) {
-                queues.add(generatedMatchQueue);
-            }
-        } while (queues.size() < clubs.size() - 1);
-
-        addRevangesRound(queues);
+    public static Schedule generateSchedule(List<Club> clubs) {
+        TEAMS_QUANTITY = clubs.size();
+        List<Club> clubsCopy = new ArrayList<>(clubs);
+        List<Club> clubsRandomOrder = changeOrderInList(clubsCopy);
+        List<MatchQueue> queues = generateQueues(clubsRandomOrder);
+        List<MatchQueue> queuesWithRevangesRound = createRevangesRound(queues);
         //todo kolejnosc
-        return new Schedule(queues);
+        return new Schedule(queuesWithRevangesRound);
     }
 
-    private static void addRevangesRound(List<MatchQueue> queues) {
-        int queueSizeAfterFirstRound = queues.size();
-        for (int i = 0; i < queueSizeAfterFirstRound; i++) {
-                Set<Match> matches = new HashSet<>();
-            for (Match match: queues.get(i).getMatches()){
-                matches.add(new Match(match.getAwayClub(), match.getHomeClub()));
-            }
-            queues.add(new MatchQueue(matches, queues.size() + 1));
+    private static List<MatchQueue> generateQueues(List<Club> clubsRandomOrder) {
+        LinkedList<Club>[] parts = shareClubsOnTwoParts(clubsRandomOrder);
+        LinkedList<Club> upperPart = parts[0];
+        LinkedList<Club> lowerPart = parts[1];
+        List<MatchQueue> queues = new ArrayList<>();
+        for (int queueNumber = 1; queueNumber < TEAMS_QUANTITY; queueNumber++) {
+            queues.add(generateMatchQueue(queueNumber, upperPart, lowerPart));
+            //change position
+            swapListRound(upperPart, lowerPart);
         }
+        return queues;
     }
 
-    private static MatchQueue generateSetMatchesQueue(final List<Club> clubs, int number) {
+    private static void swapListRound(LinkedList<Club> upperPart, LinkedList<Club> lowerPart) {
+        upperPart.add(1, lowerPart.removeFirst());
+        lowerPart.addLast(upperPart.removeLast());
+    }
+
+    private static MatchQueue generateMatchQueue(int queueNumber, LinkedList<Club> upperPart, LinkedList<Club> lowerPart) {
+        Set<Match> matches;
+        if (queueNumber % 2 != 0) {
+            matches = generateMatches(upperPart, lowerPart);
+        } else {
+            matches = generateMatches(lowerPart, upperPart);
+        }
+        return new MatchQueue(matches, queueNumber);
+    }
+
+    private static Set<Match> generateMatches(LinkedList<Club> upperPart, LinkedList<Club> lowerPart) {
         Set<Match> matches = new HashSet<>();
-        Random random = new Random();
-        do {
-            int homeClubIndex = random.nextInt(clubs.size());
-            int awayClubIndex = random.nextInt(clubs.size());
-            if (homeClubIndex != awayClubIndex) {
-                matches.add(new Match(clubs.get(homeClubIndex), clubs.get(awayClubIndex)));
-                clubs.remove(clubs.get(Math.max(homeClubIndex, awayClubIndex)));
-                clubs.remove(clubs.get(Math.min(homeClubIndex, awayClubIndex)));
-            }
-        }while (clubs.size() > 0);
-        return new MatchQueue(matches, number);
+        for (int i = 0; i < upperPart.size(); i++) {
+            Club homeTeam = upperPart.get(i);
+            Club awayClub = lowerPart.get(i);
+            matches.add(new Match(homeTeam, awayClub));
+        }
+        return matches;
     }
 
+    private static LinkedList[] shareClubsOnTwoParts(List<Club> clubsRandomOrder) {
+        LinkedList<Club> part1 = new LinkedList<>();
+        LinkedList<Club> part2 = new LinkedList<>();
+        int clubsLength = clubsRandomOrder.size();
+        for (int i = 0; i < clubsLength; i++) {
+            if (i < clubsLength / 2) {
+                part1.add(clubsRandomOrder.get(i));
+            } else {
+                part2.addFirst(clubsRandomOrder.get(i));
+            }
+        }
+        return new LinkedList[]{part1, part2};
+    }
+
+    private static List<Club> changeOrderInList(List<Club> clubsCopy) {
+        List<Club> clubsToReturn = new ArrayList<>();
+        Random r = new Random();
+        do {
+            int index = r.nextInt(clubsCopy.size());
+            Club randomClub = clubsCopy.get(index);
+            if (randomClub != null) {
+                clubsToReturn.add(randomClub);
+                clubsCopy.set(index, null);
+            }
+        } while (clubsToReturn.size() < clubsCopy.size());
+        return clubsToReturn;
+    }
+//todo
+    private static List<MatchQueue> createRevangesRound(List<MatchQueue> queues) {
+        List<MatchQueue> allMatches = new ArrayList<>(queues);
+        for (MatchQueue queue : queues) {
+            Set<Match> matches = queue.getMatches();
+            Set<Match> revangeMatches = collectRevangeMatches(matches);
+            MatchQueue matchQueue = new MatchQueue(revangeMatches, allMatches.size() + 1);
+            allMatches.add(matchQueue);
+        }
+        return allMatches;
+    }
+
+    private static Set<Match> collectRevangeMatches(Set<Match> matches) {
+        Set<Match> revangeMatches = new HashSet<>();
+        for (Match match: matches) {
+            revangeMatches.add(new Match(match.getAwayClub(), match.getHomeClub()));
+        }
+        return revangeMatches;
+    }
 }

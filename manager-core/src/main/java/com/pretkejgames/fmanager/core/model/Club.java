@@ -69,7 +69,7 @@ public class Club {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Club club = (Club) o;
-        return name.equals(club.name);
+        return name.equals(club.getName());
     }
 
     @Override
